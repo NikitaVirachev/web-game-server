@@ -8,5 +8,8 @@
     "start:prod": "NODE_ENV=production nodemon server.js"
   },
   "author": "Nikita Virachev",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.7"
+  }
 }

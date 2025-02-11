@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
-const authRouter = require('./routes/authRoutes');
+const userRouter = require('./routes/userRoutes');
 
 const app = express();
 
@@ -24,6 +24,6 @@ app.get('/', (req, res) => {
 });
 
 // 3) Routes
-app.use('/api/v1/login', authRouter);
+app.use('/api/v1/users', userRouter);
 
 module.exports = app;

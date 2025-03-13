@@ -7,7 +7,9 @@ exports.login = catchAsync(async (req, res, next) => {
 
   const user = await User.findOne({ email });
 
-  if (!user) throw new AppError('Incorrect email or password', 400);
+  if (!user) {
+    return next(new AppError('Incorrect email or password', 401));
+  }
 
   res.status(200).json({
     status: 'success',

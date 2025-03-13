@@ -1,42 +1,30 @@
 const User = require('../models/userModel');
+const AppError = require('../utils/appError');
+const catchAsync = require('../utils/catchAsync');
 
-exports.login = async (req, res) => {
-  try {
-    const { email } = req.body;
+exports.login = catchAsync(async (req, res, next) => {
+  const { email } = req.body;
 
-    const user = await User.findOne({ email });
+  const user = await User.findOne({ email });
 
-    if (!user) throw new Error('Incorrect email or password');
+  if (!user) throw new AppError('Incorrect email or password', 400);
 
-    res.status(200).json({
-      status: 'success',
-      data: {
-        user,
-      },
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err.message,
-    });
-  }
-};
+  res.status(200).json({
+    status: 'success',
+    data: {
+      user,
+    },
+  });
+});
 
-exports.signup = async (req, res) => {
-  try {
-    const { email, password, name } = req.body;
-    const newUser = await User.create({ email, password, name });
+exports.signup = catchAsync(async (req, res, next) => {
+  const { email, password, name } = req.body;
+  const newUser = await User.create({ email, password, name });
 
-    res.status(200).json({
-      status: 'success',
-      data: {
-        user: newUser,
-      },
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: 'Invalid data',
-    });
-  }
-};
+  res.status(200).json({
+    status: 'success',
+    data: {
+      user: newUser,
+    },
+  });
+});

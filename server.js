@@ -7,10 +7,18 @@ const app = require('./app');
 
 mongoose
   .connect(process.env.DATABASE_LOCAL)
-  .then(() => console.log('DB connection successful!'))
-  .catch((err) => console.error('DB connection error:', err));
+  .then(() => console.log('DB connection successful!'));
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`App running on port ${port}...`);
+});
+
+process.on('unhandledRejection', (err) => {
+  console.log(err.name, err.message);
+  console.log('UNHANDLED REJECTION! 🔥 Shutting doen...');
+  server.close(() => {
+    // TO DO restart app
+    process.exit(1);
+  });
 });

@@ -20,10 +20,10 @@ exports.login = catchAsync(async (req, res, next) => {
 });
 
 exports.signup = catchAsync(async (req, res, next) => {
-  const { email, password, name } = req.body;
-  const newUser = await User.create({ email, password, name });
+  const { email, password, passwordConfirm, name } = req.body;
+  const newUser = await User.create({ email, password, passwordConfirm, name });
 
-  res.status(200).json({
+  res.status(201).json({
     status: 'success',
     data: {
       user: newUser,
